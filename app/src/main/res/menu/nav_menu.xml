@@ -6,4 +6,7 @@
         android:id="@+id/qr"
         android:checked="true"
         android:icon="@drawable/qr_scan_ic" />
+    <item
+        android:id="@+id/qrgen"
+        android:icon="@drawable/ic_qr_gen_vec" />
 </menu>
