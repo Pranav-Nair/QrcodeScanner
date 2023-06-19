@@ -1,7 +1,5 @@
 package pn.app.qrcodescanner.bottomnavbar.fragments
 
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -12,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.camera.core.impl.utils.ContextUtil.getApplicationContext
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -20,7 +17,6 @@ import io.github.g0dkar.qrcode.QRCode
 import pn.app.qrcodescanner.R
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 
 
 class QrCodeGenerator : Fragment() {

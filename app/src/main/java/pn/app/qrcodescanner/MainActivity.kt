@@ -2,7 +2,6 @@ package pn.app.qrcodescanner
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.FrameLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import pn.app.qrcodescanner.bottomnavbar.fragments.QrCodeGenerator
