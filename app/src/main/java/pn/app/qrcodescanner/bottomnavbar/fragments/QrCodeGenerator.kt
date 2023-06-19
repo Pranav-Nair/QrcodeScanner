@@ -39,12 +39,14 @@ class QrCodeGenerator : Fragment() {
         val clearbtn = view.findViewById<Button>(R.id.clearbtn)
         val urlfield = view.findViewById<EditText>(R.id.urlfieldet)
         val qriv = view.findViewById<ImageView>(R.id.qrcodeiv)
+        var qrivisEmoty = true
         val sharebtn = view.findViewById<FloatingActionButton>(R.id.sharebtn)
 
         clearbtn.setOnClickListener {
             qriv.setImageResource(R.drawable.ic_launcher_qrcode_foreground)
             urlfield.text.clear()
             removeTempfiles()
+            qrivisEmoty=true
         }
 
         generatebtn.setOnClickListener {
@@ -53,26 +55,29 @@ class QrCodeGenerator : Fragment() {
                 val image : Bitmap = qrcode.render().nativeImage() as Bitmap
                 saveToInternalStorage(image)
                 qriv.setImageBitmap(image)
-
+                qrivisEmoty=false
             }
         }
 
         sharebtn.setOnClickListener {
-            val folderName = "${requireActivity().applicationContext.filesDir}/tmp/qrcodes"
-            val directory = File(folderName)
-            directory.mkdirs()
-            val fileName = "qrcode.png"
-            val file = File(directory, fileName)
-            if (file.exists()) {
-            val qrimg = FileProvider.getUriForFile(requireContext(),requireContext().packageName+".provider", file)
-                val shareIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    // Example: content://com.google.android.apps.photos.contentprovider/...
-                    putExtra(Intent.EXTRA_STREAM, qrimg)
-                    type = "image/png"
+            if (!qrivisEmoty) {
+                val folderName = "${requireActivity().applicationContext.filesDir}/tmp/qrcodes"
+                val directory = File(folderName)
+                directory.mkdirs()
+                val fileName = "qrcode.png"
+                val file = File(directory, fileName)
+                if (file.exists()) {
+                    val qrimg = FileProvider.getUriForFile(requireContext(),requireContext().packageName+".provider", file)
+                    val shareIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        // Example: content://com.google.android.apps.photos.contentprovider/...
+                        putExtra(Intent.EXTRA_STREAM, qrimg)
+                        type = "image/png"
+                    }
+                    requireContext().startActivity(Intent.createChooser(shareIntent, "share"))
                 }
-                requireContext().startActivity(Intent.createChooser(shareIntent, "share"))
             }
+
         }
     }
 
